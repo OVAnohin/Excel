@@ -40,6 +40,14 @@ Module Module1
         'xlWorkSheet = CType(xlWorkBook.Sheets(2), Excel.Worksheet)
         xlWorkSheet = CType(xlWorkBook.Sheets(sheetName), Excel.Worksheet)
 
+        'fix time column
+        Dim columnName As String = "Время"
+        For i As Integer = 0 To dataTable.Rows.Count - 1
+            Dim dRow As DataRow = dataTable.Rows(i)
+            dRow(columnName) = Mid(dRow(columnName), 12)
+        Next
+        '/fix time column
+
         Dim timeArray(dataTable.Rows.Count, dataTable.Columns.Count) As Object
         Dim row As Integer, col As Integer
 
