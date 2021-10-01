@@ -34,15 +34,19 @@ Module Module1
         Dim localFolder As String = "d:\Work"
         Dim fileName As String = "result.xlsb"
         Dim fullFileName As String = localFolder & "\" & fileName
+        Dim sheetName As String = "Коллекция"
 
-        xlWorkBook = xlApp.Workbooks.Add(misValue)
-        xlWorkSheet = CType(xlWorkBook.Sheets(1), Excel.Worksheet)
+        xlWorkBook = xlApp.Workbooks.Open(fullFileName)
+        'xlWorkSheet = CType(xlWorkBook.Sheets(2), Excel.Worksheet)
+        xlWorkSheet = CType(xlWorkBook.Sheets(sheetName), Excel.Worksheet)
         'xlWorkSheet.Name = "Sheet1"
         'xlWorkSheet.Cells(1, 1) = "Sheet 1 content"
         DataTableToExcel(dataTable, xlWorkSheet, xlWorkSheet.Name)
 
-        xlWorkBook.SaveAs(fullFileName, 50)
-        xlWorkBook.Close(True, misValue, misValue)
+        'xlWorkBook.SaveAs(fullFileName, 50)
+        'xlWorkBook.Close(True, misValue, misValue)
+        xlWorkBook.Save()
+        xlWorkBook.Close()
         xlApp.Quit()
 
         ReleaseObject(xlWorkSheet)
