@@ -63,7 +63,7 @@ Module Module1
             col += 1
         Next
 
-        xlWorkSheet.Range(xlWorkSheet.Cells(2, 1), xlWorkSheet.Cells(dataTable.Rows.Count, dataTable.Columns.Count)).Value = timeArray
+        xlWorkSheet.Range(xlWorkSheet.Cells(2, 1), xlWorkSheet.Cells(dataTable.Rows.Count + 1, dataTable.Columns.Count)).Value = timeArray
 
         xlWorkBook.Save()
         xlWorkBook.Close()
