@@ -39,12 +39,24 @@ Module Module1
         xlWorkBook = xlApp.Workbooks.Open(fullFileName)
         'xlWorkSheet = CType(xlWorkBook.Sheets(2), Excel.Worksheet)
         xlWorkSheet = CType(xlWorkBook.Sheets(sheetName), Excel.Worksheet)
-        'xlWorkSheet.Name = "Sheet1"
-        'xlWorkSheet.Cells(1, 1) = "Sheet 1 content"
-        DataTableToExcel(dataTable, xlWorkSheet, xlWorkSheet.Name)
 
-        'xlWorkBook.SaveAs(fullFileName, 50)
-        'xlWorkBook.Close(True, misValue, misValue)
+        Dim timeArray(dataTable.Rows.Count, dataTable.Columns.Count) As Object
+        Dim row As Integer, col As Integer
+
+        For row = 0 To dataTable.Rows.Count - 1
+            For col = 0 To dataTable.Columns.Count - 1
+                timeArray(row, col) = dataTable.Rows(row).Item(col)
+            Next
+        Next
+
+        col = 0
+        For Each column As DataColumn In dataTable.Columns
+            xlWorkSheet.Cells(1, col + 1) = column.ColumnName
+            col += 1
+        Next
+
+        xlWorkSheet.Range(xlWorkSheet.Cells(2, 1), xlWorkSheet.Cells(dataTable.Rows.Count, dataTable.Columns.Count)).Value = timeArray
+
         xlWorkBook.Save()
         xlWorkBook.Close()
         xlApp.Quit()
