@@ -6,6 +6,12 @@ Module Module1
     Private oConnection As OleDbConnection
 
     Sub Main()
+        Dim columnsDateToFix As DataTable = New DataTable()
+        columnsDateToFix.Columns.Add("ColumnName", Type.GetType("System.String"))
+        Dim newRow As DataRow = columnsDateToFix.NewRow()
+        newRow("ColumnName") = "Дата"
+        columnsDateToFix.Rows.Add(newRow)
+        'newRow = columnsDateToFix.NewRow()
 
         'datatable
         Dim connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=d:\Time\work1.xlsx;" + "Extended Properties='Excel 12.0 Xml;HDR=YES;'"
@@ -63,6 +69,18 @@ Module Module1
             col += 1
         Next
 
+        If columnsDateToFix.Rows.Count > 0 Then
+            For Each column As DataRow In columnsDateToFix.Rows
+                For col = 0 To dataTable.Columns.Count - 1
+                    If xlWorkSheet.Cells(1, col + 1).Value = column("ColumnName") Then
+                        xlWorkSheet.Cells(2, col + 1).NumberFormat = "dd/mm/yyyy"
+                    End If
+                Next
+            Next
+        End If
+
+
+
         xlWorkSheet.Range(xlWorkSheet.Cells(2, 1), xlWorkSheet.Cells(dataTable.Rows.Count + 1, dataTable.Columns.Count)).Value = timeArray
 
         xlWorkBook.Save()
@@ -72,6 +90,11 @@ Module Module1
         ReleaseObject(xlWorkSheet)
         ReleaseObject(xlWorkBook)
         ReleaseObject(xlApp)
+
+        'For i As Integer = 1 To dataTable.Rows.Count
+        '    'xlWorkSheet.Range("a" & (dataTable.Rows.Count + 2), "b" & i).NumberFormat = "mm/dd/yyyy"
+        '    Console.WriteLine("a" & (dataTable.Rows.Count + 2) & " " & "b" & i)
+        'Next
 
         'Console.ReadKey()
 

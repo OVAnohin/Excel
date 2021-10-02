@@ -30,6 +30,7 @@ Module Module1
         Dim dataTable As DataTable
         oDataAdapter.Fill(oDataSet)
         dataTable = oDataSet.Tables(0)
+        oConnection.Close()
 
         'ShowTable(dataTable)
         Dim view As New DataView(dataTable)
