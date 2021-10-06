@@ -3,12 +3,6 @@
 Module Module1
 
     Sub Main()
-
-        Dim str As String = "4600074897"
-        If Left(str, 2) = "46" Then
-            Console.WriteLine("46")
-        End If
-
         Dim xlApp As Excel.Application = New Excel.Application()
 
         If xlApp Is Nothing Then
@@ -21,13 +15,12 @@ Module Module1
         Dim misValue As Object = Reflection.Missing.Value
 
         xlWorkBook = xlApp.Workbooks.Add(misValue)
-        'Console.WriteLine(xlWorkBook.Sheets(0).Name)
-        xlWorkSheet = CType(xlWorkBook.Sheets(1), Excel.Worksheet)
-        'xlWorkSheet = xlWorkBook.Sheets("sheet1")
-        xlWorkSheet.Cells(1, 1) = "Sheet 1 content"
+        Console.WriteLine(xlWorkBook.Sheets(0).Name)
+        xlWorkSheet = CType(xlWorkBook.Sheets(4), Excel.Worksheet)
 
-        xlWorkBook.SaveAs("d:\Time\VB-Excel.xls", Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue)
-        xlWorkBook.Close(True, misValue, misValue)
+        'xlWorkBook.SaveAs("d:\Time\VB-Excel.xls", Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue)
+        'xlWorkBook.Close(True, misValue, misValue)
+        xlWorkBook.Close()
         xlApp.Quit()
 
         ReleaseObject(xlWorkSheet)
@@ -45,6 +38,8 @@ Module Module1
         Finally
             GC.Collect()
         End Try
+    End Sub
+
     End Sub
 
 End Module

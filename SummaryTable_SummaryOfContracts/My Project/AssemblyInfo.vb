@@ -8,17 +8,17 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("DataTable")>
+<Assembly: AssemblyTitle("SummaryTable_SummaryOfContracts")>
 <Assembly: AssemblyDescription("")>
 <Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("DataTable")>
+<Assembly: AssemblyProduct("SummaryTable_SummaryOfContracts")>
 <Assembly: AssemblyCopyright("Copyright ©  2021")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
-<Assembly: Guid("38489e52-8806-4d25-918c-47c0ed1dec58")>
+<Assembly: Guid("168b1cce-9031-4c66-a36c-1cb23247ecec")>
 
 ' Version information for an assembly consists of the following four values:
 '

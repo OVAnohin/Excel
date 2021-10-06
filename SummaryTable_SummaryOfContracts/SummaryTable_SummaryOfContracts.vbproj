@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F0D7CC93-3764-4A82-8C63-CE3D09BE8681}</ProjectGuid>
+    <ProjectGuid>{50B66808-43DD-42B4-B1E8-3F3DD241EE43}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>DataTable.Module1</StartupObject>
-    <RootNamespace>DataTable</RootNamespace>
-    <AssemblyName>DataTable</AssemblyName>
+    <StartupObject>SummaryTable_SummaryOfContracts.Module1</StartupObject>
+    <RootNamespace>SummaryTable_SummaryOfContracts</RootNamespace>
+    <AssemblyName>SummaryTable_SummaryOfContracts</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Console</MyType>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
@@ -22,7 +22,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>DataTable.xml</DocumentationFile>
+    <DocumentationFile>SummaryTable_SummaryOfContracts.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -32,7 +32,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>DataTable.xml</DocumentationFile>
+    <DocumentationFile>SummaryTable_SummaryOfContracts.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -48,6 +48,9 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
