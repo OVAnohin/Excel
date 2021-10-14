@@ -37,6 +37,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DataTableWriteXml", "DataTa
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ExitSAP", "ExitSAP\ExitSAP.vbproj", "{A45ABE99-0105-4796-9DD9-5A25459F16F6}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SummaryOfContracts", "SummaryOfContracts\SummaryOfContracts.vbproj", "{70679711-2542-4149-A6BA-4E42E5F26BDC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,10 @@ Global
 		{A45ABE99-0105-4796-9DD9-5A25459F16F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A45ABE99-0105-4796-9DD9-5A25459F16F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A45ABE99-0105-4796-9DD9-5A25459F16F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70679711-2542-4149-A6BA-4E42E5F26BDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70679711-2542-4149-A6BA-4E42E5F26BDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70679711-2542-4149-A6BA-4E42E5F26BDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70679711-2542-4149-A6BA-4E42E5F26BDC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
