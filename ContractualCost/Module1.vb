@@ -5,7 +5,7 @@ Module Module1
     Sub Main()
 
         Dim oConnection As OleDbConnection
-        Dim connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=d:\Time\TablePaymentTermsCodeFalset.xlsx;" + "Extended Properties='Excel 12.0 Xml;HDR=YES;'"
+        Dim connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=d:\Time\TableContractualCost.xlsx;" + "Extended Properties='Excel 12.0 Xml;HDR=YES;'"
         If oConnection Is Nothing Then
             oConnection = New OleDbConnection(connectionString)
             oConnection.Open()
@@ -15,14 +15,14 @@ Module Module1
         'sheetName = "Sheet1"
         Dim oDataAdapter As New OleDbDataAdapter("Select * from[" & sheetName & "$]", oConnection)
         Dim oDataSet As New DataSet
-        Dim TablePaymentTermsCodeFalse As DataTable
+        Dim tableContractualCost As DataTable
         oDataAdapter.Fill(oDataSet)
-        TablePaymentTermsCodeFalse = oDataSet.Tables(0)
+        tableContractualCost = oDataSet.Tables(0)
         oConnection.Close()
         oConnection = Nothing
 
         'table work1
-        connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=d:\Time\ZRUV_ECM_PT_Filtered.xlsx;" + "Extended Properties='Excel 12.0 Xml;HDR=YES;'"
+        connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=d:\Time\TableWork1.xlsx;" + "Extended Properties='Excel 12.0 Xml;HDR=YES;'"
         If oConnection Is Nothing Then
             oConnection = New OleDbConnection(connectionString)
             oConnection.Open()
@@ -31,9 +31,9 @@ Module Module1
         sheetName = "Sheet1"
         oDataAdapter = New OleDbDataAdapter("Select * from[" & sheetName & "$]", oConnection)
         oDataSet = New DataSet
-        Dim ZRUV_ECM_PT_Filtered As DataTable
+        Dim tableWork1 As DataTable
         oDataAdapter.Fill(oDataSet)
-        ZRUV_ECM_PT_Filtered = oDataSet.Tables(0)
+        tableWork1 = oDataSet.Tables(0)
         oConnection.Close()
         oConnection = Nothing
 
@@ -42,76 +42,63 @@ Module Module1
         Dim filter As String
         Dim tempTable As DataTable
 
-        TablePaymentTermsCodeFalse.Columns.Add("DateC", Type.GetType("System.DateTime"))
-        TablePaymentTermsCodeFalse.Columns.Add("DatePo", Type.GetType("System.DateTime"))
-        TablePaymentTermsCodeFalse.Columns.Add("YesOrNo", Type.GetType("System.String"))
-
-        For i As Integer = 0 To TablePaymentTermsCodeFalse.Rows.Count - 1
-            Dim row As DataRow = TablePaymentTermsCodeFalse.Rows(i)
-            Dim searchString As String = row("Ссылка на платеж")
-            Dim rowAI As String = row("AI")
-            view = New DataView(ZRUV_ECM_PT_Filtered)
-            filter = "[Номер контракта] = " & row("Ссылка на платеж")
-            view.RowFilter = filter
-            tempTable = view.ToTable()
-            If tempTable.Rows.Count = 0 Then
-                row("DateC") = ""
-                row("DatePo") = ""
-                row("YesOrNo") = "да"
-                Continue For
-            End If
-
-            Dim rowFiltered As DataRow = tempTable.Rows(0)
-
-            If Not DBNull.Value.Equals(rowFiltered("Условие платежа 3")) AndAlso rowFiltered("Условие платежа 3") <> Nothing AndAlso rowFiltered("Условие платежа 3") = row("AI") Then
-                row("DateC") = Left(rowFiltered("Дата начала действия условий платежа 3").ToString(), 10)
-                row("DatePo") = Left(rowFiltered("Дата окончания действия условий платежа 3").ToString(), 10)
-                If row("Дата документа") >= rowFiltered("Дата начала действия условий платежа 3") AndAlso row("Дата документа") <= rowFiltered("Дата окончания действия условий платежа 3") Then
-                    row("YesOrNo") = "да"
-                Else
-                    row("YesOrNo") = "нет"
+        For i As Integer = 0 To tableContractualCost.Rows.Count - 1
+            Dim row As DataRow = tableContractualCost.Rows(i)
+            If Not DBNull.Value.Equals(row("СсылкаПлат")) Then
+                Dim searchString As String = row("СсылкаПлат")
+                Dim searchChar = "/"
+                Dim position = InStr(1, searchString, searchChar, 1)
+                If position <> Nothing AndAlso position <> 0 Then
+                    row("СсылкаПлат") = Mid(searchString, position + 1)
                 End If
-                Continue For
             End If
-            If Not DBNull.Value.Equals(rowFiltered("Условие платежа 2")) AndAlso rowFiltered("Условие платежа 2") <> Nothing AndAlso rowFiltered("Условие платежа 2") = row("AI") Then
-                row("DateC") = rowFiltered("Дата начала действия условий платежа 2")
-                row("DatePo") = rowFiltered("Дата окончания действия условий платежа 2")
-                If row("Дата документа") >= rowFiltered("Дата начала действия условий платежа 2") AndAlso row("Дата документа") <= rowFiltered("Дата окончания действия условий платежа 2") Then
-                    row("YesOrNo") = "да"
-                Else
-                    row("YesOrNo") = "нет"
-                End If
-                Continue For
-            End If
-            If Not DBNull.Value.Equals(rowFiltered("Условие платежа 1")) AndAlso rowFiltered("Условие платежа 1") <> Nothing AndAlso rowFiltered("Условие платежа 1") = row("AI") Then
-                row("DateC") = Left(rowFiltered("Дата начала действия условий платежа 1").ToString(), 10)
-                row("DatePo") = rowFiltered("Дата окончания действия условий платежа")
-                If row("Дата документа") >= rowFiltered("Дата начала действия условий платежа 1") AndAlso row("Дата документа") <= rowFiltered("Дата окончания действия условий платежа") Then
-                    row("YesOrNo") = "да"
-                Else
-                    row("YesOrNo") = "нет"
-                End If
-                Continue For
-            End If
-            row("YesOrNo") = "да"
         Next
 
-        TablePaymentTermsCodeFalse.Columns.Add("Сцепить", Type.GetType("System.String"))
-        TablePaymentTermsCodeFalse.Columns.Add("Контракт", Type.GetType("System.String"))
+        For i As Integer = 0 To tableContractualCost.Rows.Count - 1
+            Dim row As DataRow = tableContractualCost.Rows(i)
+            Dim searchString As String
+            Dim contractNumber As String
+            If Not DBNull.Value.Equals(row("СсылкаПлат")) Then
+                searchString = row("СсылкаПлат")
+            Else
+                searchString = Nothing
+            End If
+            If Not DBNull.Value.Equals(row("№ договора")) Then
+                contractNumber = row("№ договора")
+            Else
+                contractNumber = Nothing
+            End If
+            If DBNull.Value.Equals(row("СсылкаПлат")) AndAlso DBNull.Value.Equals(row("№ договора")) Then
+                Continue For
+            End If
+            If searchString = Nothing AndAlso contractNumber = Nothing Then
+                Continue For
+            End If
+            If searchString = Nothing AndAlso contractNumber <> Nothing Then
+                row("СсылкаПлат") = row("№ договора")
+                Continue For
+            End If
+            If searchString <> Nothing AndAlso Left(searchString, 2) <> "46" Then
+                row("СсылкаПлат") = row("№ договора")
+            End If
+        Next
+
+        tableContractualCost.Columns.Add("Сцепить", Type.GetType("System.String"))
+        tableContractualCost.Columns.Add("Контракт", Type.GetType("System.String"))
 
         'СЦЕПИТЬ(J2;"_";N2)
         '#Н/Д
 
-        For i As Integer = 0 To TablePaymentTermsCodeFalse.Rows.Count - 1
-            Dim row As DataRow = TablePaymentTermsCodeFalse.Rows(i)
+        For i As Integer = 0 To tableContractualCost.Rows.Count - 1
+            Dim row As DataRow = tableContractualCost.Rows(i)
             row("Сцепить") = row("Блк") & "_" & row("Текст заголовка документа")
         Next
 
-        For i As Integer = 0 To TablePaymentTermsCodeFalse.Rows.Count - 1
-            Dim row As DataRow = TablePaymentTermsCodeFalse.Rows(i)
-            view = New DataView(ZRUV_ECM_PT_Filtered)
+        For i As Integer = 0 To tableContractualCost.Rows.Count - 1
+            Dim row As DataRow = tableContractualCost.Rows(i)
+            view = New DataView(tableWork1)
 
-            If row("СсылкаПлат") <> Nothing AndAlso row("СсылкаПлат") <> "" Then
+            If Not DBNull.Value.Equals(row("СсылкаПлат")) AndAlso row("СсылкаПлат") <> Nothing AndAlso row("СсылкаПлат").ToString() <> "" Then
                 filter = "[Номер Договора] = " & row("СсылкаПлат")
                 view.RowFilter = filter
                 tempTable = view.ToTable()
@@ -126,26 +113,25 @@ Module Module1
         Next
 
         Dim tableParkedBlocked As DataTable
-        tableParkedBlocked = TablePaymentTermsCodeFalse.Clone()
+        tableParkedBlocked = tableContractualCost.Clone()
         Dim tableTemp2 As DataTable
-        tableTemp2 = TablePaymentTermsCodeFalse.Clone()
+        tableTemp2 = tableContractualCost.Clone()
         Dim tableTemp3 As DataTable
-        tableTemp3 = TablePaymentTermsCodeFalse.Clone()
+        tableTemp3 = tableContractualCost.Clone()
 
         'Filter = "@5C\Qоткрыт.@"
-        view = New DataView(TablePaymentTermsCodeFalse)
+        view = New DataView(tableContractualCost)
         filter = "[Ст] = '@5C\Qоткрыт.@'"
         view.RowFilter = filter
         Dim tableOpenPosition As DataTable = view.ToTable()
 
         'Filter = "@5D\QПредвРег@"
-        view = New DataView(TablePaymentTermsCodeFalse)
+        view = New DataView(tableContractualCost)
         filter = "[Ст] = '@5D\QПредвРег@'"
         view.RowFilter = filter
         Dim tablePreRegistration As DataTable = view.ToTable()
 
         '(19-58) Фильтр по столбцу А по тексту «@5C\Qоткрыт.@»
-        '                                       @5C\Qоткрыт.@
         'Фильтр (20-52) по столбцу AJ «Сцепить»: сначала по значению «Х*», затем по значению «W*,01*»
         view = New DataView(tableOpenPosition)
         filter = "[Сцепить] Like 'Х%'"
@@ -183,18 +169,49 @@ Module Module1
 
         'Фильтр по столбцу АК «Контракт» по значению «#Н/Д», фильтр по столбцу В по пустым. Отфильтрованные данные скопировать на вкладку «запарк|заблок».
         view = New DataView(tableTemp2)
-        filter = "[Контракт] Like '#Н/Д' AND [СсылкаПлат] = ''"
+        'filter = "[Контракт] Like '#Н/Д' AND [СсылкаПлат] = ''"
+        filter = "[Контракт] Like '#Н/Д' AND [СсылкаПлат] IS NULL OR [СсылкаПлат] = ''"
         view.RowFilter = filter
         tempTable = view.ToTable()
         For i As Integer = 0 To tempTable.Rows.Count - 1
             tableParkedBlocked.ImportRow(tempTable.Rows(i))
         Next
 
-
         '************************************************
-        'Фильтр по столбцу А по тексту «@5D\QПредвРег@». Фильтр по столбцу N «Текст заголовка документа» по значению «,01».
+        '!!!! Old Фильтр по столбцу А по тексту «@5D\QПредвРег@». Фильтр по столбцу N «Текст заголовка документа» по значению «,01».
+
+        '1)	Фильтр по столбцу Y «БЕ» по значению «RU*»
+        'Фильтр по столбцу N «Текст заголовка документа» по значению «,01».
         view = New DataView(tablePreRegistration)
-        filter = "[Текст заголовка документа] Like '%,01%'"
+        filter = "[БЕ] Like 'RU%' AND [Текст заголовка документа] Like '%,01'"
+        view.RowFilter = filter
+        tempTable = view.ToTable()
+        For i As Integer = 0 To tempTable.Rows.Count - 1
+            tableParkedBlocked.ImportRow(tempTable.Rows(i))
+        Next
+
+        '2)	Фильтр по столбцу Y «БЕ» по значению «UA01»
+        'Фильтр по столбцу N «Текст заголовка документа» по значению «,01»
+        view = New DataView(tablePreRegistration)
+        filter = "[БЕ] = 'UA01' AND [Текст заголовка документа] Like '%,01'"
+        view.RowFilter = filter
+        tempTable = view.ToTable()
+        For i As Integer = 0 To tempTable.Rows.Count - 1
+            tableParkedBlocked.ImportRow(tempTable.Rows(i))
+        Next
+
+        'Фильтр по столбцу N «Текст заголовка документа» по значению «,05»
+        view = New DataView(tablePreRegistration)
+        filter = "[Текст заголовка документа] Like '%,05'"
+        view.RowFilter = filter
+        tempTable = view.ToTable()
+        For i As Integer = 0 To tempTable.Rows.Count - 1
+            tableParkedBlocked.ImportRow(tempTable.Rows(i))
+        Next
+
+        'Фильтр по столбцу N «Текст заголовка документа» по значению «,07B» (В – латинская)
+        view = New DataView(tablePreRegistration)
+        filter = "[Текст заголовка документа] Like '%,07B'"
         view.RowFilter = filter
         tempTable = view.ToTable()
         For i As Integer = 0 To tempTable.Rows.Count - 1
@@ -209,9 +226,9 @@ Module Module1
 
         For i As Integer = 0 To tableParkedBlocked.Rows.Count - 1
             Dim row As DataRow = tableParkedBlocked.Rows(i)
-            view = New DataView(ZRUV_ECM_PT_Filtered)
+            view = New DataView(tableWork1)
 
-            If row("Счет") <> Nothing AndAlso row("Счет") <> "" Then
+            If Not DBNull.Value.Equals(row("Счет")) AndAlso row("Счет") <> Nothing AndAlso row("Счет").ToString() <> "" Then
                 filter = "[Кредитор] = " & row("Счет")
                 view.RowFilter = filter
                 tempTable = view.ToTable()
@@ -237,7 +254,10 @@ Module Module1
             End If
         Next
 
-        ShowTable(tableParkedBlocked)
+        tableParkedBlocked.Columns.Remove("Сцепить")
+        tableParkedBlocked.Columns.Remove("Контракт")
+
+        ShowTable(tableContractualCost)
         Console.ReadKey()
 
     End Sub
