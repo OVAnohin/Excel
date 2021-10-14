@@ -5,13 +5,13 @@ Module Module1
     Sub Main()
 
         Dim oConnection As OleDbConnection
-        Dim connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=d:\Time\TableContractualCost.xlsx;" + "Extended Properties='Excel 12.0 Xml;HDR=YES;'"
+        Dim connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=d:\Time\ContractualCost.xlsb;" + "Extended Properties='Excel 12.0 Xml;HDR=YES;'"
         If oConnection Is Nothing Then
             oConnection = New OleDbConnection(connectionString)
             oConnection.Open()
         End If
 
-        Dim sheetName As String = "Sheet1"
+        Dim sheetName As String = "Лист1"
         'sheetName = "Sheet1"
         Dim oDataAdapter As New OleDbDataAdapter("Select * from[" & sheetName & "$]", oConnection)
         Dim oDataSet As New DataSet
