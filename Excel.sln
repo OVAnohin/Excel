@@ -39,6 +39,14 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ExitSAP", "ExitSAP\ExitSAP.
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SummaryOfContracts", "SummaryOfContracts\SummaryOfContracts.vbproj", "{70679711-2542-4149-A6BA-4E42E5F26BDC}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "CreateTableWork6", "CreateTableWork6\CreateTableWork6.vbproj", "{A058354C-8D62-4454-97DF-7AE7B3E5D29B}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "UpdateTableSummaryOfContracts", "UpdateTableSummaryOfContracts\UpdateTableSummaryOfContracts.vbproj", "{2E84189A-B14F-4D32-B730-4D8BACC2D9D9}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "UpdateTableSummaryOfPrice", "UpdateTableSummaryOfPrice\UpdateTableSummaryOfPrice.vbproj", "{62F02126-3F48-44B7-9D5E-4F7E7B2BDDC9}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "UpdateTableParkedBlocked", "UpdateTableParkedBlocked\UpdateTableParkedBlocked.vbproj", "{3FD3F375-6D77-4EB0-A889-1F09BC8D5B23}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +125,22 @@ Global
 		{70679711-2542-4149-A6BA-4E42E5F26BDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70679711-2542-4149-A6BA-4E42E5F26BDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70679711-2542-4149-A6BA-4E42E5F26BDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A058354C-8D62-4454-97DF-7AE7B3E5D29B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A058354C-8D62-4454-97DF-7AE7B3E5D29B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A058354C-8D62-4454-97DF-7AE7B3E5D29B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A058354C-8D62-4454-97DF-7AE7B3E5D29B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E84189A-B14F-4D32-B730-4D8BACC2D9D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E84189A-B14F-4D32-B730-4D8BACC2D9D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E84189A-B14F-4D32-B730-4D8BACC2D9D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E84189A-B14F-4D32-B730-4D8BACC2D9D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62F02126-3F48-44B7-9D5E-4F7E7B2BDDC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62F02126-3F48-44B7-9D5E-4F7E7B2BDDC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62F02126-3F48-44B7-9D5E-4F7E7B2BDDC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62F02126-3F48-44B7-9D5E-4F7E7B2BDDC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FD3F375-6D77-4EB0-A889-1F09BC8D5B23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FD3F375-6D77-4EB0-A889-1F09BC8D5B23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FD3F375-6D77-4EB0-A889-1F09BC8D5B23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FD3F375-6D77-4EB0-A889-1F09BC8D5B23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

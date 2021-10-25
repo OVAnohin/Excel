@@ -1,41 +1,24 @@
-﻿Imports System.Data.OleDb
+﻿Imports System.IO
+Imports System.Xml.Serialization
 
 Module Module1
 
     Sub Main()
 
-        Dim oConnection As OleDbConnection
-        Dim connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=d:\Time\ContractualCost.xlsb;" + "Extended Properties='Excel 12.0 Xml;HDR=YES;'"
-        If oConnection Is Nothing Then
-            oConnection = New OleDbConnection(connectionString)
-            oConnection.Open()
-        End If
+        Dim tableContractualCost As DataTable = New DataTable()
+        Dim stream As FileStream = New FileStream("d:\Time\TableContractualCost.xml", FileMode.Open, FileAccess.Read)
+        Dim deSerializer As XmlSerializer = New XmlSerializer(tableContractualCost.GetType())
 
-        Dim sheetName As String = "Лист1"
-        'sheetName = "Sheet1"
-        Dim oDataAdapter As New OleDbDataAdapter("Select * from[" & sheetName & "$]", oConnection)
-        Dim oDataSet As New DataSet
-        Dim tableContractualCost As DataTable
-        oDataAdapter.Fill(oDataSet)
-        tableContractualCost = oDataSet.Tables(0)
-        oConnection.Close()
-        oConnection = Nothing
+        tableContractualCost = deSerializer.Deserialize(stream)
+        stream.Close()
 
-        'table work1
-        connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=d:\Time\TableWork1.xlsx;" + "Extended Properties='Excel 12.0 Xml;HDR=YES;'"
-        If oConnection Is Nothing Then
-            oConnection = New OleDbConnection(connectionString)
-            oConnection.Open()
-        End If
+        'table TableBlocked.xml
+        Dim tableWork1 As DataTable = New DataTable()
+        stream = New FileStream("d:\Time\TableWork1.xml", FileMode.Open, FileAccess.Read)
+        deSerializer = New XmlSerializer(tableWork1.GetType())
 
-        sheetName = "Sheet1"
-        oDataAdapter = New OleDbDataAdapter("Select * from[" & sheetName & "$]", oConnection)
-        oDataSet = New DataSet
-        Dim tableWork1 As DataTable
-        oDataAdapter.Fill(oDataSet)
-        tableWork1 = oDataSet.Tables(0)
-        oConnection.Close()
-        oConnection = Nothing
+        tableWork1 = deSerializer.Deserialize(stream)
+        stream.Close()
 
         '**************** Begin
         Dim view As DataView
@@ -99,7 +82,7 @@ Module Module1
             view = New DataView(tableWork1)
 
             If Not DBNull.Value.Equals(row("СсылкаПлат")) AndAlso row("СсылкаПлат") <> Nothing AndAlso row("СсылкаПлат").ToString() <> "" Then
-                filter = "[Номер Договора] = " & row("СсылкаПлат")
+                filter = "[Номер Договора] = '" & row("СсылкаПлат") & "'"
                 view.RowFilter = filter
                 tempTable = view.ToTable()
                 If tempTable.Rows.Count > 0 Then
@@ -202,7 +185,16 @@ Module Module1
 
         'Фильтр по столбцу N «Текст заголовка документа» по значению «,05»
         view = New DataView(tablePreRegistration)
-        filter = "[Текст заголовка документа] Like '%,05'"
+        filter = "[БЕ] = 'UA01' AND [Текст заголовка документа] Like '%,05'"
+        view.RowFilter = filter
+        tempTable = view.ToTable()
+        For i As Integer = 0 To tempTable.Rows.Count - 1
+            tableParkedBlocked.ImportRow(tempTable.Rows(i))
+        Next
+
+        'Фильтр по столбцу N «Текст заголовка документа» по значению «,05,»
+        view = New DataView(tablePreRegistration)
+        filter = "[БЕ] = 'UA01' AND [Текст заголовка документа] Like '%,05,%'"
         view.RowFilter = filter
         tempTable = view.ToTable()
         For i As Integer = 0 To tempTable.Rows.Count - 1
@@ -211,7 +203,7 @@ Module Module1
 
         'Фильтр по столбцу N «Текст заголовка документа» по значению «,07B» (В – латинская)
         view = New DataView(tablePreRegistration)
-        filter = "[Текст заголовка документа] Like '%,07B'"
+        filter = "[БЕ] = 'UA01' AND [Текст заголовка документа] Like '%,07B'"
         view.RowFilter = filter
         tempTable = view.ToTable()
         For i As Integer = 0 To tempTable.Rows.Count - 1
@@ -256,6 +248,9 @@ Module Module1
 
         tableParkedBlocked.Columns.Remove("Сцепить")
         tableParkedBlocked.Columns.Remove("Контракт")
+
+        'tableParkedBlockedOut = tableParkedBlocked
+        'tableContractualCostOut = tableContractualCost
 
         ShowTable(tableContractualCost)
         Console.ReadKey()
