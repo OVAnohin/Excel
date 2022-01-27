@@ -4,11 +4,6 @@ Module Module1
 
     Sub Main()
 
-        Dim str As String = "4600074897"
-        If Left(str, 2) = "46" Then
-            Console.WriteLine("46")
-        End If
-
         Dim xlApp As Excel.Application = New Excel.Application()
 
         If xlApp Is Nothing Then

@@ -80,7 +80,7 @@ Module Module1
                     Dim row As DataRow = tempTable.Rows(i)
                     If Not DBNull.Value.Equals(row("Кредитор")) AndAlso row("Кредитор") <> Nothing Then
                         view = New DataView(tableBlocked)
-                        filter = "[Счет] = '" & row("Кредитор") & "'"
+                        filter = "[Счет] = '" & CInt(row("Кредитор")) & "'"
                         view.RowFilter = filter
                         tempTable2 = view.ToTable()
                         If tempTable2.Rows.Count > 0 Then
@@ -132,7 +132,8 @@ Module Module1
                     Dim row As DataRow = tempTable.Rows(i)
                     If Not DBNull.Value.Equals(row("Кредитор")) AndAlso row("Кредитор") <> Nothing Then
                         view = New DataView(tableBlockedUkr)
-                        filter = "[Счет] = '" & row("Кредитор") & "'"
+                        'filter = "[Счет] = '" & row("Кредитор") & "'"
+                        filter = "[Счет] = '" & CInt(row("Кредитор")) & "'"
                         view.RowFilter = filter
                         tempTable2 = view.ToTable()
                         If tempTable2.Rows.Count > 0 Then

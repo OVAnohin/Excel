@@ -117,7 +117,7 @@ Module Module1
         '(19-58) Фильтр по столбцу А по тексту «@5C\Qоткрыт.@»
         'Фильтр (20-52) по столбцу AJ «Сцепить»: сначала по значению «Х*», затем по значению «W*,01*»
         view = New DataView(tableOpenPosition)
-        filter = "[Сцепить] Like 'Х%'"
+        filter = "[Сцепить] Like 'X%'"
         view.RowFilter = filter
         tempTable = view.ToTable()
         For i As Integer = 0 To tempTable.Rows.Count - 1

@@ -226,6 +226,15 @@ Module Module1
             tableParkedBlocked.ImportRow(tempTable.Rows(i))
         Next
 
+        'Фильтр по столбцу N «Текст заголовка документа» по значению «,07B,» (В – латинская)
+        view = New DataView(tablePreRegistration)
+        filter = "[Текст заголовка документа] Like '%,07B,'"
+        view.RowFilter = filter
+        tempTable = view.ToTable()
+        For i As Integer = 0 To tempTable.Rows.Count - 1
+            tableParkedBlocked.ImportRow(tempTable.Rows(i))
+        Next
+
         tableParkedBlocked.Columns.Add("Новое значение", Type.GetType("System.String"))
         tableParkedBlocked.Columns.Add("Старое значение", Type.GetType("System.String"))
         tableParkedBlocked.Columns.Add("Валюта", Type.GetType("System.String"))
